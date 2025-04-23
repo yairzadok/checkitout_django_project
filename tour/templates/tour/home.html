@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Check it Out</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="{% static 'tour/styles.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    <div class="header">
+        <span class="header-title">
+            <span class="material-icons checkmark-inline">check_circle</span>
+            Check it Out
+        </span>
+        <div class="header-icons">
+            <div class="menu-wrapper">
+                <span class="material-icons" onclick="toggleMenu()">more_vert</span>
+                <div id="dropdownMenu" class="dropdown-menu" style="display: none;">
+                    <a href="#" onclick="showAbout()">About Me</a>
+                    <a href="#">Login</a>
+                </div>
+            </div>
+            <a href="{% static 'assets/help.html' %}" >
+                <span class="material-icons help-icon">help_outline</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>ניהול סיורים בקלות</h1>
+        <a href="{% url 'tour' %}">
+            <button>התחל סיור</button>
+        </a>
+
+        <div class="checkmark">✔</div>
+    </div>
+
+    <!-- Modal for About Me -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="material-icons profile-icon">account_circle</span>
+            <p><strong>name:</strong> Dr. Yair Zadok</p>
+            <p><strong>Email:</strong> <a href="mailto:yair6655@gmail.com">yair6655@gmail.com</a></p>
+            <p><strong>Phone:</strong> <a href="tel:+972528876688">+972-52-8876688</a></p>
+            <div class="modal-actions">
+                <button onclick="shareInfo()">SHARE</button>
+                <button onclick="closeAbout()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function startTour() {
+            window.location.href = "{% url 'start_tour' %}";
+        }
+
+        function showAbout() {
+            document.getElementById('aboutModal').style.display = 'block';
+        }
+
+        function closeAbout() {
+            document.getElementById('aboutModal').style.display = 'none';
+        }
+
+        function shareInfo() {
+            alert("You clicked SHARE. (Implement actual share logic here)");
+        }
+
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('dropdownMenu');
+            const button = document.querySelector('.menu-wrapper span');
+            if (!menu.contains(event.target) && !button.contains(event.target)) {
+                menu.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
